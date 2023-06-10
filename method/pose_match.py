@@ -23,7 +23,11 @@ exercise_landmarks = {
     'Situp': upper_body+ lower_body,
     # 다른 운동 종류에 대한 랜드마크 인덱스를 추가하세요.
 }
-
+from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import as_completed
+# Helper function to process each user clip
+def process_user_clip(user_clip_path, expert_video_path, exercise):
+    return get_frame_similarity_list(user_clip_path, expert_video_path, exercise)
 def process_frame(frame,pose):# pose estimation
     results = pose.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
@@ -257,5 +261,19 @@ def main():
     plt.grid(True)
     plt.show()
 
+def main2():
+    # Assuming user_clips is a list of file paths to the user video clips
+    user_clips = ['output/squat_0.mp4', 'output/squat_1.mp4', 'output/squat_2.mp4', 'output/squat_3.mp4', 'output/squat_4.mp4']
+    expert_video = 'output1_divide.mp4'
+
+    with ProcessPoolExecutor() as executor:
+        futures = [executor.submit(process_user_clip, user_clip, expert_video, 'Squat') for user_clip in user_clips]
+
+        # Now gather the results as they become available
+        for future in as_completed(futures):
+            similarity_list = future.result()
+            print(similarity_list)
+            # Now do whatever you need to with similarity_list
+
 if __name__ == '__main__':
-    main()
+    main2()
