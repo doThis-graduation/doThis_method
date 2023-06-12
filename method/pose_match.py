@@ -7,7 +7,9 @@ import math
 import sys, os
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="mediapipe")
+print("11111")
 from openpose_skeleton import skeleton
+print("22222")
 import matplotlib.pyplot as plt
 import pandas as pd
 mp_drawing = mp.solutions.drawing_utils
@@ -138,7 +140,6 @@ def plot_similarity(similarity_list, save_path):
 def draw_joints(image_path):
     # 이미지 읽기
     image = cv2.imread(image_path)
-
     # 이미지 컬러 공간을 BGR에서 RGB로 변환
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -214,7 +215,7 @@ def get_pose_similarity(video_path1, video_path2, exercise):# main function
             cv2.imwrite(f"video2_frame_{i + 1}_cosine.jpg", frame2)
 
             # 관절 그리기
-            joint_image1, joint_image2, advice = skeleton.main(frame1, frame2)
+            joint_image1, joint_image2, advice = skeleton.main_process(frame1, frame2)
 #             joint_image1 = draw_joints(f"video1_frame_{i + 1}_cosine.jpg")
 #             joint_image2 = draw_joints(f"video2_frame_{i + 1}_cosine.jpg")
 
@@ -276,4 +277,4 @@ def main2():
             # Now do whatever you need to with similarity_list
 
 if __name__ == '__main__':
-    main2()
+    main()

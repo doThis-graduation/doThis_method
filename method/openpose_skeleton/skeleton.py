@@ -23,7 +23,7 @@ def draw(frame, index):  # 1~5
 
     #-- 이미지 불러오기
     image = frame
-
+    print(image)
     # -- 불러온 이미지에서 height, width, color를 가져옴
     imageHeight, imageWidth, _ = image.shape
 
@@ -125,7 +125,7 @@ def calculate_angle(point_A, point_B, point_C):
     return angle_deg
 
 
-def main(frame1, frame2):
+def main_process(frame1, frame2):
     index_arr = []
     advice_str = ""
 
@@ -199,13 +199,3 @@ def main(frame1, frame2):
 
 
     return image11, image22, advice_str
-
-
-image1 = cv2.imread("./image1.jpg")
-image2 = cv2.imread("./image3.jpg")
-
-i1, i2, advice = main(image1, image2)
-print(advice)
-cv2.imshow("Image 1", i1)
-cv2.imshow("Image 2", i2)
-cv2.waitKey(0)
